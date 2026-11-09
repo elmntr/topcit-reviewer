@@ -1107,3 +1107,49 @@ button { border-radius: var(--radius-pill) !important; }
   .topbar-right { gap: 0.45rem; }
   .account-dialog-card { padding: 1.1rem; }
 }
+
+/* Keep the header, navigation and study controls usable on narrow screens. */
+@media (max-width: 600px) {
+  .app-container { width: 100%; height: 100dvh; min-height: 100svh; }
+  .main-wrapper, .content-area, .view-section { min-width: 0; }
+  .sidebar {
+    position: fixed;
+    inset: 0 auto 0 0;
+    width: min(var(--sidebar-w), calc(100vw - 2.5rem));
+    height: 100dvh;
+    padding-bottom: env(safe-area-inset-bottom);
+    box-shadow: 8px 0 28px rgba(15, 23, 42, 0.18);
+  }
+  .topbar { height: auto; min-height: 58px; flex-wrap: wrap; gap: 0.45rem; padding: 0.45rem 0.7rem; }
+  .topbar > div:first-child { width: 100%; min-width: 0; gap: 0.45rem !important; }
+  .mobile-toggle { width: 44px; height: 44px; flex: 0 0 44px; }
+  .search-box { width: auto; min-width: 0; flex: 1; }
+  .search-box input { min-height: 44px; font-size: 16px; }
+  .topbar-right { width: 100%; justify-content: space-between; gap: 0.5rem; }
+  .account-button { min-height: 40px; padding-inline: 0.8rem; font-size: 0.75rem; }
+  .pomo-widget { margin-left: auto; }
+  .content-area { padding: 1rem 0.75rem calc(1.25rem + env(safe-area-inset-bottom)); }
+  .view-header { margin-bottom: 1rem; }
+  .view-header h2 { font-size: clamp(1.3rem, 6vw, 1.6rem); }
+  .card-grid { grid-template-columns: minmax(0, 1fr); gap: 0.8rem; }
+  .day-header { align-items: flex-start; }
+  .day-body { padding: 0.75rem; }
+  .session-item { display: grid; grid-template-columns: 20px minmax(0, 1fr); gap: 0.65rem; }
+  .session-info { min-width: 0; }
+  .session-action-btn { grid-column: 2; justify-self: start; min-height: 44px; margin-left: 0; }
+  .session-checkbox { width: 20px; height: 20px; }
+  .quiz-toolbar select { min-width: 0; width: 100%; min-height: 44px; }
+  .account-dialog { max-height: calc(100dvh - 1rem); overflow-y: auto; }
+  .account-dialog-card { padding: 1rem; }
+  .account-fields input { min-height: 46px; font-size: 16px; }
+  .account-actions button { min-height: 44px; }
+}
+
+@media (max-width: 380px) {
+  .content-area { padding-inline: 0.6rem; }
+  .pomo-widget { gap: 0.3rem; padding-inline: 0.4rem; }
+  .pomo-time { font-size: 0.78rem; }
+  .day-badge { flex: 0 0 auto; }
+  .day-title { min-width: 0; overflow-wrap: anywhere; }
+  .account-secondary-actions { flex-wrap: wrap; }
+}
