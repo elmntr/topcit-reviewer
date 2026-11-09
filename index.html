@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TOPCIT Master | 14-Day CICT Exam Readiness & Review Platform</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-icon">T</div>
+        <div class="brand-info">
+          <h1>TOPCIT Master</h1>
+          <p>14-Day CICT Exam Platform</p>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section-title">Preparation Schedule</div>
+        <a class="nav-item active" data-view="plan">
+          <span class="nav-mark">PLAN</span>
+          <span>14-Day Study Plan</span>
+          <span class="badge">14 Days</span>
+        </a>
+
+        <div class="nav-section-title">All 6 Exam Domains</div>
+        <a class="nav-item" data-domain="domain1">
+          <span class="nav-mark">01</span>
+          <span>1. Software Development</span>
+        </a>
+        <a class="nav-item" data-domain="domain2">
+          <span class="nav-mark">02</span>
+          <span>2. Data & Database</span>
+        </a>
+        <a class="nav-item" data-domain="domain3">
+          <span class="nav-mark">03</span>
+          <span>3. System Architecture</span>
+        </a>
+        <a class="nav-item" data-domain="domain4">
+          <span class="nav-mark">04</span>
+          <span>4. Information Security</span>
+        </a>
+        <a class="nav-item" data-domain="domain5">
+          <span class="nav-mark">05</span>
+          <span>5. IT Business & Ethics</span>
+        </a>
+        <a class="nav-item" data-domain="domain6">
+          <span class="nav-mark">06</span>
+          <span>6. Project Management</span>
+        </a>
+
+        <div class="nav-section-title">Assessment & Practice</div>
+        <a class="nav-item" data-view="exam">
+          <span class="nav-mark">EXAM</span>
+          <span>CICT Mock Exam</span>
+          <span class="badge" style="background: var(--danger); color: white;">65 Qs</span>
+        </a>
+        <a class="nav-item" data-view="quizzes">
+          <span class="nav-mark">QUIZ</span>
+          <span>Domain Practice Quizzes</span>
+          <span class="badge">6</span>
+        </a>
+        <a class="nav-item" data-view="flashcards">
+          <span class="nav-mark">CARDS</span>
+          <span>Flashcard Deck</span>
+          <span class="badge">45 Cards</span>
+        </a>
+        <a class="nav-item" data-view="cheatsheet">
+          <span class="nav-mark">REF</span>
+          <span>Formulas & Cheat Sheet</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button class="theme-toggle-btn" id="theme-toggle-btn">
+          Light theme
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="main-wrapper">
+      <!-- Topbar Header -->
+      <header class="topbar">
+        <div style="display: flex; align-items: center; gap: 1rem;">
+          <button class="mobile-toggle" id="mobile-toggle">☰</button>
+          <div class="search-box">
+            <span class="search-icon" aria-hidden="true"></span>
+            <input type="text" id="global-search-input" placeholder="Search topics, formulas, concepts...">
+            <div class="search-results" id="search-results" role="listbox" aria-label="Search results" hidden></div>
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <button class="account-button" id="account-button" type="button" aria-haspopup="dialog" aria-controls="account-dialog">Sign in to sync</button>
+          <!-- Burnout Prevention Pomodoro Widget -->
+          <div class="pomo-widget">
+            <span id="pomo-mode" style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">Study</span>
+            <span class="pomo-time" id="pomo-display">25:00</span>
+            <button class="pomo-btn" id="pomo-toggle" title="Start/Pause 25-min study timer">▶</button>
+          </div>
+        </div>
+      </header>
+
+      <!-- Scrollable Main Content -->
+      <main class="content-area">
+        <!-- VIEW: 14-Day Study Plan -->
+        <section class="view-section active" id="plan-section">
+          <div class="view-header">
+            <h2>14-Day Study Plan</h2>
+            <p>Bite-sized 25-minute study sessions organized to cover the entire TOPCIT/CICT syllabus before your exam without fatigue.</p>
+          </div>
+          <div id="study-plan-container">
+            <!-- Dynamically rendered by app.js -->
+          </div>
+        </section>
+
+        <!-- VIEW: Domain Practice Quizzes -->
+        <section class="view-section" id="quizzes-section">
+          <div class="view-header">
+            <h2>Domain Practice Quizzes</h2>
+            <p>Check your understanding with short, scored quizzes and explanations.</p>
+          </div>
+          <div id="quiz-container"></div>
+        </section>
+
+        <!-- VIEW: Domain Study Notes (All 6 Modules) -->
+        <section class="view-section" id="domain-view-section">
+          <div id="domain-content-container">
+            <!-- Dynamically rendered by app.js -->
+          </div>
+        </section>
+
+        <!-- VIEW: CICT Mock Exam Simulation -->
+        <section class="view-section" id="exam-section">
+          <div class="view-header">
+          <h2>CICT / TOPCIT Mock Exam</h2>
+          <p>65 practice questions &bull; 120 minutes &bull; normalized 1000-point score &bull; estimated Level 1–5 diagnostic</p>
+          </div>
+          <div id="exam-container-wrapper">
+            <div class="exam-container">
+              <div class="exam-status-bar">
+                <div class="exam-timer">
+                  <span>Time remaining</span>
+                  <span id="exam-countdown">02:00:00</span>
+                </div>
+                <div class="exam-progress">
+                  <span>65 Questions Total</span>
+                </div>
+              </div>
+
+              <!-- Question Palette Grid -->
+              <div class="exam-nav-grid" id="exam-nav-grid">
+                <!-- 65 question numbers rendered here -->
+              </div>
+
+              <!-- Question Details & Choices -->
+              <div id="exam-question-box" class="q-box">
+                <!-- Active Question Content -->
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- VIEW: Flashcards Deck -->
+        <section class="view-section" id="flashcards-section">
+          <div class="view-header">
+            <h2>High-Yield Flashcards</h2>
+            <p>Review key definitions, formulas, and acronyms across all six domains.</p>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; max-width: 600px; margin: 0 auto 1rem;">
+            <select id="flashcard-domain-filter" style="background: var(--bg-card); color: var(--text-main); border: 1px solid var(--border); padding: 0.4rem 0.75rem; border-radius: var(--radius); font-size: 0.85rem; outline: none;">
+              <option value="all">All Domains (45 Cards)</option>
+              <option value="domain1">Domain 1: Software Development</option>
+              <option value="domain2">Domain 2: Data & Databases</option>
+              <option value="domain3">Domain 3: System Architecture</option>
+              <option value="domain4">Domain 4: Information Security</option>
+              <option value="domain5">Domain 5: IT Business & Ethics</option>
+              <option value="domain6">Domain 6: Project Management</option>
+            </select>
+            <span id="card-counter" style="font-family: var(--font-mono); font-size: 0.88rem; color: var(--text-muted);">1 / 45</span>
+          </div>
+
+          <div class="flashcard-wrapper">
+            <div class="flashcard" id="active-flashcard">
+              <!-- Front Face -->
+              <div class="card-face front">
+                <div class="card-header-badge">
+                  <span id="card-front-domain" style="font-weight: 700; color: var(--primary);">Domain</span>
+                  <span id="card-front-cat" class="topic-tag">Category</span>
+                </div>
+                <div class="card-content-center" id="card-front-text">
+                  Loading card...
+                </div>
+                <div class="card-footer-tip">
+                  Select the card or use Flip Card to reveal the answer
+                </div>
+              </div>
+              <!-- Back Face -->
+              <div class="card-face back">
+                <div class="card-header-badge">
+                  <span style="font-weight: 700; color: var(--success);">Answer & Explanation</span>
+                  <span id="card-back-cat" class="topic-tag">Category</span>
+                </div>
+                <div class="card-content-center" id="card-back-text" style="font-size: 1.05rem; font-weight: 500;">
+                  Answer details
+                </div>
+                <div class="card-footer-tip">
+                  Select the card or use Flip Card to return
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="flashcard-controls">
+            <button class="btn-secondary" id="card-prev-btn">&larr; Previous</button>
+            <button class="btn-primary" id="card-flip-btn">Flip card</button>
+            <button class="btn-secondary" id="card-next-btn">Next &rarr;</button>
+          </div>
+        </section>
+
+        <!-- VIEW: High-Yield Formulas & Cheat Sheet -->
+        <section class="view-section" id="cheatsheet-section">
+          <div class="view-header">
+            <h2>Core Formulas & Acronyms</h2>
+            <p>A quick reference for calculations and terms used throughout the study modules.</p>
+          </div>
+          <div id="cheatsheet-container">
+            <!-- Dynamically populated by app.js -->
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <dialog class="account-dialog" id="account-dialog" aria-labelledby="account-title">
+    <section class="account-dialog-card">
+      <div class="account-dialog-heading">
+        <div>
+          <p class="domain-kicker">YOUR STUDY DATA</p>
+          <h2 id="account-title">Save progress across devices</h2>
+        </div>
+        <button class="account-close" id="account-close" type="button" aria-label="Close">×</button>
+      </div>
+      <p class="account-description">Sign in to sync completed study sessions between your phone and laptop. You can keep using this app on this device without an account.</p>
+      <p class="account-message" id="account-message" role="status" aria-live="polite">Progress is saved on this device.</p>
+      <div class="account-fields">
+        <label for="account-email">Email</label>
+        <input id="account-email" type="email" autocomplete="email" placeholder="you@example.com">
+        <label for="account-password">Password</label>
+        <input id="account-password" type="password" autocomplete="current-password" minlength="8" placeholder="At least 8 characters">
+      </div>
+      <div class="account-actions">
+        <button class="btn-primary" id="account-signin" type="button">Sign in</button>
+        <button class="btn-secondary" id="account-signup" type="button">Create account</button>
+        <button class="btn-primary" id="account-update-password" type="button" hidden>Save new password</button>
+      </div>
+      <div class="account-secondary-actions">
+        <button class="text-button" id="account-reset" type="button">Forgot password?</button>
+        <button class="text-button" id="account-signout" type="button" hidden>Sign out</button>
+      </div>
+    </section>
+  </dialog>
+
+  <!-- Data & Application Scripts -->
+  <script src="js/data-plan.js"></script>
+  <script src="js/data-modules.js"></script>
+  <script src="js/data-exam.js"></script>
+  <script src="js/data-flashcards.js"></script>
+  <script src="js/data-quizzes.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

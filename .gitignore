@@ -1,0 +1,22 @@
+# Source study PDFs are large and should stay local to this project.
+/*_removed.pdf
+
+# Local PDF extraction output and Python caches used during content preparation.
+/extracted/
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Local secrets and credentials.
+.env
+.env.*
+!.env.example
+.dev.vars
+*.pem
+
+# Local tooling and operating-system files.
+.wrangler/
+node_modules/
+.DS_Store
+Thumbs.db
