@@ -976,6 +976,7 @@ button { border-radius: var(--radius-pill) !important; }
 .brand-icon { width: 34px; height: 34px; display: grid; place-items: center; border-radius: 50%; background: #d93a00; color: #fff; font-size: 0.95rem; font-weight: 800; }
 .brand-info h1 { color: var(--text-main); font-size: 1rem; font-weight: 650; letter-spacing: 0; }
 .brand-info p { font-size: 0.72rem; }
+.sidebar-close { display: none; }
 .sidebar-nav { gap: 0.18rem; padding: 0.8rem 0.65rem; }
 .nav-section-title { font-size: 0.625rem; letter-spacing: 0.5px; padding: 0.9rem 0.75rem 0.35rem; }
 .nav-item { gap: 0.65rem; padding: 0.55rem 0.7rem; border-radius: var(--radius); font-size: 0.84rem; }
@@ -1120,6 +1121,7 @@ button { border-radius: var(--radius-pill) !important; }
     padding-bottom: env(safe-area-inset-bottom);
     box-shadow: 8px 0 28px rgba(15, 23, 42, 0.18);
   }
+  .sidebar-close { display: grid; place-items: center; flex: 0 0 44px; width: 44px; height: 44px; border: 0; background: var(--bg-card); color: var(--text-main); font-size: 1.6rem; line-height: 1; cursor: pointer; }
   .topbar { height: auto; min-height: 58px; flex-wrap: wrap; gap: 0.45rem; padding: 0.45rem 0.7rem; }
   .topbar > div:first-child { width: 100%; min-width: 0; gap: 0.45rem !important; }
   .mobile-toggle { width: 44px; height: 44px; flex: 0 0 44px; }

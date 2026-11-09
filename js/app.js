@@ -344,6 +344,12 @@ document.getElementById('theme-toggle-btn')?.addEventListener('click', () => {
 document.getElementById('mobile-toggle')?.addEventListener('click', () => {
   document.getElementById('sidebar')?.classList.toggle('open');
 });
+document.getElementById('sidebar-close')?.addEventListener('click', () => {
+  document.getElementById('sidebar')?.classList.remove('open');
+});
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape') document.getElementById('sidebar')?.classList.remove('open');
+});
 
 // Navigation & Router
 function setupNavigation() {
