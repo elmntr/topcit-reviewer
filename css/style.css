@@ -1155,3 +1155,21 @@ button { border-radius: var(--radius-pill) !important; }
   .day-title { min-width: 0; overflow-wrap: anywhere; }
   .account-secondary-actions { flex-wrap: wrap; }
 }
+
+.practical-lab { margin: 1.2rem 0 1.5rem; padding: clamp(0.9rem, 3vw, 1.25rem); border: 1px solid var(--border); border-top: 3px solid #d93a00; background: var(--bg-card); }
+.practical-lab-heading { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; margin-bottom: 0.35rem; }
+.practical-lab-heading .domain-kicker { margin: 0; }
+.practical-lab-heading h4 { font-size: 1.05rem; font-weight: 650; }
+.practical-lab-heading > span { color: var(--text-muted); font-size: 0.76rem; white-space: nowrap; }
+.practical-lab progress { width: 100%; height: 0.55rem; margin: 0.5rem 0 0.9rem; accent-color: var(--primary); }
+.practical-scenario { margin-bottom: 0.85rem; font-size: 0.95rem; font-weight: 550; line-height: 1.6; }
+.practical-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; margin-bottom: 0.75rem; }
+.practical-fields label, .practical-reason-label { display: grid; gap: 0.35rem; color: var(--text-main); font-size: 0.8rem; font-weight: 650; }
+.practical-fields select, .practical-lab textarea { width: 100%; min-width: 0; min-height: 44px; padding: 0.6rem 0.7rem; border: 1px solid var(--border-subtle); border-radius: 4px; background: var(--bg-surface); color: var(--text-main); font: 400 0.9rem var(--font-sans); }
+.practical-lab textarea { min-height: 64px; resize: vertical; }
+.practical-lab-actions { display: flex; justify-content: flex-end; margin-top: 0.75rem; }
+.practical-lab-actions button { min-height: 44px; padding: 0.55rem 1rem; }
+.practical-feedback { min-height: 1.4em; margin-top: 0.7rem; color: var(--text-muted); font-size: 0.84rem; line-height: 1.55; }
+.practical-feedback strong { color: var(--text-main); }
+.practical-result { margin: 0.6rem 0 1rem; color: var(--text-muted); }
+@media (max-width: 600px) { .practical-fields { grid-template-columns: minmax(0, 1fr); } }

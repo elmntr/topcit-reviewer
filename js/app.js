@@ -33,6 +33,34 @@ let supabaseClient = null;
 let progressSyncTimer = null;
 let accountSyncMessage = 'Progress is saved on this device.';
 let accountRecoveryMode = false;
+const DATA_STRUCTURE_PRACTICE = [
+  {
+    scenario: 'A print server must process jobs in the same order they arrive. New jobs can be added while the printer is busy.',
+    structure: 'Queue', classification: 'Linear',
+    explanation: 'A queue is linear and follows FIFO: the first job enqueued is the first job dequeued. That preserves arrival order.'
+  },
+  {
+    scenario: 'A text editor must undo the most recent change first, then the change before that.',
+    structure: 'Stack', classification: 'Linear',
+    explanation: 'A stack is linear and follows LIFO. The last edit pushed onto the stack is the first one popped for undo.'
+  },
+  {
+    scenario: 'An organization chart connects each manager to several reports. Every employee, except the top leader, has one direct manager.',
+    structure: 'Tree', classification: 'Non-linear',
+    explanation: 'A tree is non-linear because it branches into parent-child levels. This is a hierarchy, not a sequence.'
+  },
+  {
+    scenario: 'A route planner stores cities and the roads between them. A city can connect to many other cities, and you need to find routes.',
+    structure: 'Graph', classification: 'Non-linear',
+    explanation: 'A graph is non-linear: cities are vertices and roads are edges. Traversal algorithms such as BFS or Dijkstra can find routes.'
+  },
+  {
+    scenario: 'A sensor records exactly 24 hourly readings each day. The app often retrieves the reading for a known hour number.',
+    structure: 'Array', classification: 'Linear',
+    explanation: 'An array is linear and stores items in indexed order. A known hour maps directly to an index for fast random access.'
+  }
+];
+let dataStructurePracticeState = { index: 0, checked: false, score: 0, structure: '', classification: '', reason: '', correct: false };
 
 function progressStorageKey(userId = '') {
   return userId ? `topcit_completed_sessions:${userId}` : 'topcit_completed_sessions';
@@ -604,6 +632,7 @@ function renderDomainView(domainId) {
           <span style="font-size: 0.75rem; background: var(--bg-card); color: var(--text-muted); padding: 0.25rem 0.65rem; border-radius: 9999px;">${sec.badge}</span>
         </div>
         ${sec.summary ? `<p class="section-summary">${sec.summary}</p>` : ''}
+        ${sec.id === 'sw-ds-algo' ? renderDataStructurePractice() : ''}
         <div class="section-html-content">
           ${sec.content}
         </div>
@@ -613,6 +642,106 @@ function renderDomainView(domainId) {
 
   html += `</div>`;
   container.innerHTML = html;
+  if (domainId === 'domain1') setupDataStructurePractice();
+}
+
+function renderDataStructurePractice() {
+  const { index, checked, score } = dataStructurePracticeState;
+  const total = DATA_STRUCTURE_PRACTICE.length;
+  if (index >= total) {
+    return `<div class="practical-lab" id="data-structure-practice">
+      <div class="practical-lab-heading"><div><p class="domain-kicker">PRACTICAL DRILL</p><h4>Data structure casework</h4></div><span>${total}/${total} cases</span></div>
+      <progress value="${total}" max="${total}" aria-label="Practice cases completed"></progress>
+      <p class="practical-result">You matched <strong>${score} / ${total}</strong> structures and classifications.</p>
+      <button class="btn-secondary" id="ds-practice-restart" type="button">Run the cases again</button>
+    </div>`;
+  }
+  const item = DATA_STRUCTURE_PRACTICE[index];
+  const progress = index + (checked ? 1 : 0);
+  const feedback = checked
+    ? `<strong>${dataStructurePracticeState.correct ? 'Good call.' : `Best fit: ${item.structure} · ${item.classification}.`}</strong> ${item.explanation} Compare that with your reason above.`
+    : 'Classify by shape: sequence (linear) or branching/network (non-linear).';
+  return `<div class="practical-lab" id="data-structure-practice">
+    <div class="practical-lab-heading"><div><p class="domain-kicker">PRACTICAL DRILL</p><h4>Pick the structure for the job</h4></div><span>Case ${index + 1} of ${total}</span></div>
+    <progress value="${progress}" max="${total}" aria-label="Practice progress"></progress>
+    <p class="practical-scenario">${item.scenario}</p>
+    <div class="practical-fields">
+      <label>Best structure
+        <select id="ds-practice-structure" ${checked ? 'disabled' : ''}>
+          <option value="">Choose one…</option>
+          ${['Array', 'Linked list', 'Stack', 'Queue', 'Tree', 'Graph'].map(value => `<option value="${value}" ${dataStructurePracticeState.structure === value ? 'selected' : ''}>${value}</option>`).join('')}
+        </select>
+      </label>
+      <label>Classification
+        <select id="ds-practice-classification" ${checked ? 'disabled' : ''}>
+          <option value="">Choose one…</option><option ${dataStructurePracticeState.classification === 'Linear' ? 'selected' : ''}>Linear</option><option ${dataStructurePracticeState.classification === 'Non-linear' ? 'selected' : ''}>Non-linear</option>
+        </select>
+      </label>
+    </div>
+    <label class="practical-reason-label" for="ds-practice-reason">Explain why in one sentence before checking.</label>
+    <textarea id="ds-practice-reason" rows="2" placeholder="Think about how the items connect or what order they must follow…" ${checked ? 'disabled' : ''}></textarea>
+    <div class="practical-lab-actions">
+      <button class="btn-primary" id="ds-practice-check" type="button" ${checked ? 'hidden' : ''}>Check my answer</button>
+      <button class="btn-secondary" id="ds-practice-next" type="button" ${checked ? '' : 'hidden'}>${index + 1 === total ? 'See my result' : 'Next case'}</button>
+    </div>
+    <p class="practical-feedback" id="ds-practice-feedback" role="status" aria-live="polite">${feedback}</p>
+  </div>`;
+}
+
+function setupDataStructurePractice() {
+  const host = document.getElementById('data-structure-practice');
+  if (!host) return;
+  const update = () => {
+    host.innerHTML = renderDataStructurePractice();
+    setupDataStructurePractice();
+  };
+  if (dataStructurePracticeState.index >= DATA_STRUCTURE_PRACTICE.length) {
+    host.querySelector('#ds-practice-restart')?.addEventListener('click', () => {
+      dataStructurePracticeState = { index: 0, checked: false, score: 0, structure: '', classification: '', reason: '', correct: false };
+      update();
+    });
+    return;
+  }
+  host.querySelector('#ds-practice-structure').value = dataStructurePracticeState.structure;
+  host.querySelector('#ds-practice-classification').value = dataStructurePracticeState.classification;
+  host.querySelector('#ds-practice-reason').value = dataStructurePracticeState.reason;
+  host.querySelector('#ds-practice-structure').addEventListener('change', event => { dataStructurePracticeState.structure = event.target.value; });
+  host.querySelector('#ds-practice-classification').addEventListener('change', event => { dataStructurePracticeState.classification = event.target.value; });
+  host.querySelector('#ds-practice-reason').addEventListener('input', event => { dataStructurePracticeState.reason = event.target.value; });
+  host.querySelector('#ds-practice-check')?.addEventListener('click', () => {
+    const structure = host.querySelector('#ds-practice-structure').value;
+    const classification = host.querySelector('#ds-practice-classification').value;
+    const reason = host.querySelector('#ds-practice-reason').value.trim();
+    const feedback = host.querySelector('#ds-practice-feedback');
+    if (!structure || !classification || !reason) {
+      feedback.textContent = 'Choose both answers and write a quick reason before checking.';
+      return;
+    }
+    const item = DATA_STRUCTURE_PRACTICE[dataStructurePracticeState.index];
+    const correct = structure === item.structure && classification === item.classification;
+    if (correct) dataStructurePracticeState.score++;
+    dataStructurePracticeState.structure = structure;
+    dataStructurePracticeState.classification = classification;
+    dataStructurePracticeState.reason = reason;
+    dataStructurePracticeState.correct = correct;
+    dataStructurePracticeState.checked = true;
+    host.querySelector('#ds-practice-structure').disabled = true;
+    host.querySelector('#ds-practice-classification').disabled = true;
+    host.querySelector('#ds-practice-reason').disabled = true;
+    host.querySelector('#ds-practice-check').hidden = true;
+    host.querySelector('#ds-practice-next').hidden = false;
+    host.querySelector('progress').value = dataStructurePracticeState.index + 1;
+    host.querySelector('.practical-lab-heading > span').textContent = `Case ${dataStructurePracticeState.index + 1} of ${DATA_STRUCTURE_PRACTICE.length} · ${dataStructurePracticeState.score} correct`;
+    feedback.innerHTML = `<strong>${correct ? 'Good call.' : `Best fit: ${item.structure} · ${item.classification}.`}</strong> ${item.explanation} Compare that with your reason above.`;
+  });
+  host.querySelector('#ds-practice-next')?.addEventListener('click', () => {
+    dataStructurePracticeState.index++;
+    dataStructurePracticeState.checked = false;
+    dataStructurePracticeState.structure = '';
+    dataStructurePracticeState.classification = '';
+    dataStructurePracticeState.reason = '';
+    update();
+  });
 }
 
 // ----------------------------------------------------
